@@ -1,0 +1,22 @@
+# Exact versions validated for TokenLens 0.2.0 release and one-click installs.
+# pyproject.toml pins direct dependencies; release and standalone installation
+# MUST also apply this file to constrain build/dev tooling consistently.
+fastapi==0.141.1
+uvicorn==0.52.4
+httpx==0.28.1
+pydantic==2.13.4
+PyYAML==6.0.3
+click==8.4.2
+mcp==1.29.1
+tiktoken==0.13.0
+build==1.2.2.post1
+pytest==9.1.1
+pytest-asyncio==1.4.0
+respx==0.23.1
+hypothesis==6.165.10
+pyproject-hooks==1.2.0
+packaging==26.3
+setuptools==83.0.0
+wheel==0.47.0
+
+ruff==0.16.3

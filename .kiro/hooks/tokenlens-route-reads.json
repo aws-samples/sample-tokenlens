@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "TokenLens: require compressed file reads",
+      "trigger": "PreToolUse",
+      "description": "Blocks built-in raw file-content reads so the agent retries with tokenlens_read_file; exact matcher excludes TokenLens MCP calls and search/code tools.",
+      "matcher": "^(read|read_file|read_files|fs_read)$",
+      "action": {
+        "type": "command",
+        "command": "python3 .kiro/hooks/tokenlens_route_reads.py",
+        "timeout": 10
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "tokenlens": {
+      "command": "tokenlens",
+      "args": ["mcp"],
+      "disabled": false,
+      "autoApprove": [
+        "tokenlens_compress",
+        "tokenlens_read_file",
+        "tokenlens_optimize_request",
+        "tokenlens_postprocess_response",
+        "tokenlens_stats",
+        "tokenlens_retrieve"
+      ]
+    }
+  }
+}

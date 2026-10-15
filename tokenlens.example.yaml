@@ -1,0 +1,73 @@
+# TokenLens configuration (all values shown are defaults).
+# Copy to tokenlens.yaml and edit, or override any value with environment
+# variables like TOKENLENS_COMPRESSION_MODE=aggressive.
+
+compression:
+  enabled: true
+  mode: balanced          # conservative | balanced | aggressive
+
+output_constraints:
+  enabled: false          # opt-in: injects a concise-output instruction
+  level: balanced         # minimal | balanced | aggressive
+
+prefix:
+  enabled: true
+  min_prefix_tokens: 1024 # only tag system prompts at least this large for caching
+
+proxy:
+  host: 127.0.0.1
+  port: 9470
+  # Direct Anthropic Messages API endpoint. For production AWS workloads,
+  # prefer the TokenLens library with Amazon Bedrock Converse API or use an
+  # approved Anthropic-compatible gateway.
+  upstream_base_url: https://api.anthropic.com
+  timeout_seconds: 600
+
+metrics:
+  enabled: true
+  dir: .tokenlens
+
+capture:
+  enabled: false               # opt-in: record per-optimization measurements
+  dir: .tokenlens/captures
+  store_content: false         # OFF by default; measurement-only is safe for
+                               # customer environments. When true, raw content
+                               # is stored redacted + truncated.
+
+rcs:                           # Reversible Content Store
+  enabled: false               # reversible compression: store originals so the
+                               # model can retrieve full detail on demand
+  dir: .tokenlens/rcs
+  ttl_seconds: 86400           # entries expire after 24h (originals are only
+                               # useful during the active task)
+  max_bytes: 209715200         # 200 MB hard ceiling; LRU eviction beyond it
+  max_entries: 1000            # entry-count ceiling; LRU eviction beyond it
+  max_entry_bytes: 1048576     # 1 MB; larger blobs are not stored
+
+routing:
+  enabled: false                # opt-in: classify requests and route to a
+                                 # cheaper model when configured for the tier
+  trivial_model: null            # e.g. claude-haiku-4-5; null = do not rewrite
+  moderate_model: null           # e.g. claude-sonnet-4-5; null = do not rewrite
+  confidence_threshold: 0.6      # 0-1; below this the router forces "complex"
+
+history:
+  enabled: true                 # on by default: replace older conversation
+                                 # turns with short placeholders to cut resent
+                                 # tokens (Always-On lever 2)
+  retained_window: 10            # most-recent turns kept verbatim (min 1)
+
+postprocess:
+  enabled: false                # opt-in: strip conversational filler
+                                 # (preambles, closing offers) from responses,
+                                 # preserving code blocks verbatim
+
+always_on:
+  # Generic file-read compression is configurable below.
+  # The 8 KB Kiro hook prefilter uses TOKENLENS_READ_HOOK_MIN_BYTES; this
+  # token threshold is applied after TokenLens reads UTF-8 text.
+  steering_compression_enabled: true   # compatibility-only; recursive steering
+                                        # save hooks are not shipped
+  read_routing_enabled: true            # route generic large text-file reads
+                                        # through the compressed read path
+  read_routing_threshold: 2000          # minimum file token count (inclusive)

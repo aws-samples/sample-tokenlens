@@ -1,0 +1,16 @@
+include LICENSE
+include README.md
+include CONTRIBUTING.md
+include CODE_OF_CONDUCT.md
+include SECURITY.md
+include SUPPORT.md
+include CHANGELOG.md
+include RELEASING.md
+include constraints-release.txt
+include tokenlens.example.yaml
+recursive-include src/tokenlens/resources *
+recursive-include power *
+recursive-include skill *
+recursive-include scripts *
+
+global-exclude __pycache__ *.py[cod]

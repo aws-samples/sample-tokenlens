@@ -1,0 +1,17 @@
+# TokenLens configuration. Omitted fields use safe defaults.
+compression:
+  enabled: true
+  mode: balanced
+history:
+  enabled: true
+  retained_window: 10
+postprocess:
+  enabled: false
+capture:
+  enabled: false
+  store_content: false
+rcs:                           # Reversible Content Store
+  enabled: false
+always_on:
+  read_routing_enabled: true
+  read_routing_threshold: 2000
