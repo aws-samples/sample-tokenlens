@@ -16,7 +16,7 @@ respx==0.23.1
 hypothesis==6.165.10
 pyproject-hooks==1.2.0
 packaging==26.3
-setuptools==83.0.0
+setuptools==84.1.0
 wheel==0.47.0
 
 ruff==0.16.3
